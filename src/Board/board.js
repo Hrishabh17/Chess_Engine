@@ -320,7 +320,7 @@ function Board({isBlackBoardSet, playerId}) {
                 console.log("receiving message in lobby", message)
 
                   const { senderId, message } = parsedData;
-                  if(senderId !== playerId && senderId !== 'server'){
+                  if(senderId!==playerId && senderId !== 'server' && senderId !== undefined && senderId !== null && senderId !== ""){
                     console.log("setting should send ack to false")
                     setChessExtra({...chessExtra, shouldSendAck:false})
                   }
