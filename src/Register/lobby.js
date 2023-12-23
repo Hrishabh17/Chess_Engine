@@ -42,7 +42,12 @@ export default function NewLobby() {
 
             // for start game
             if(code === 100){
-              const { message } = parsedData;
+              const { senderId, message } = parsedData;
+              console.log("received start game in lobby");
+              if(senderId!==playerId){
+                console.log("sender id is not equal to player id");
+                setChessExtra({...chessExtra, shouldSendAck:false})
+              }
               // socket.send(`/app/${roomId}`, JSON.stringify({code: 300, message: {message: "Subscribed to Room"}})
               setMessage({code: 100, roomId: roomId, message: message?.message})
             }
@@ -80,8 +85,6 @@ export default function NewLobby() {
 
 
     useEffect(() => {
-        console.log("message", message, roomId, "roomId")
-
         if(message?.code === 100){
             navigate(`/playground/${roomId}`, {state: {isBlackBoard:color?.toLowerCase()==="white"?false:true, roomId: roomId, playerId: playerId}})
         }
