@@ -33,8 +33,6 @@ export default function NewHome() {
             hex:"#303030", chessBg:"bg-[#30303098]", call:false,
             selfName:"", opponentName:""
         })
-
-        setChessExtra({ call:false, selfName:"", opponentName:"", shouldSendAck:false})
     }, [])
 
     useEffect(() => {
