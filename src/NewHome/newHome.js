@@ -358,7 +358,7 @@ export default function NewHome() {
                         </div>
                     </div> */}
                     <div className='flex justify-center'>
-                        <motion.img variants={reveal(2)} initial="hidden" animate="visible" src="assets/bg_assets/video-call.svg" alt="" className='mt-2 h-36'/>
+                        <motion.img variants={reveal(2)} initial="hidden" animate="visible" src="assets/bg_assets/video-call-feature.png" alt="" className='mt-2 h-36'/>
                     </div>
                     <div className='mt-3 flex flex-col justify-end'>
                         <motion.img variants={reveal(2)} initial="hidden" animate="visible" src="assets/bg_assets/chat.svg" className='h-44' alt="" />
@@ -412,7 +412,7 @@ export default function NewHome() {
                                     ):item.id===2?(
                                         <img ref={featuresGrid} src="./assets/bg_assets/chat.svg" alt="" className='mt-10 mb-10 h-40'/>
                                     ):item.id===3?(
-                                        <img ref={featuresGrid2} src="./assets/bg_assets/video-call-feature.svg" alt="" className='mt-8 mb-10 h-28 border'/>
+                                        <img ref={featuresGrid2} src="./assets/bg_assets/video-call-feature.png" alt="" className='mt-8 mb-10 h-28 border'/>
                                     ):(
                                         <img ref={featuresGrid2} src="./assets/bg_assets/chess-ai-2.png" alt="" className='mt-8
                                         '/>
@@ -472,7 +472,7 @@ export default function NewHome() {
                                         className="text-white mr-4">{word}</motion.span>
                                     ))}
                                 </div>
-                                <motion.img variants={fadeInAnimation(3)} initial="hidden" animate="visible" src=" ./chesspieceline.svg" className='ml-2 mt-16 h-28' />
+                                <motion.img variants={fadeInAnimation(3)} initial="hidden" animate="visible" src="./chesspieceline.png" className='ml-2 mt-16 h-28' />
                             </div>
                         </div>
                     </div>
@@ -493,7 +493,7 @@ export default function NewHome() {
                             </div>
                             {/* <motion.div id="title" variants={animateText(2.3)} initial="hidden" animate="visible" whileHover={{scale:1.3}} className='text-2xl font-[CenturyGothic] tracking-wider'>PLAY. CHAT. CONNECT.</motion.div> */}
                             <div className='flex flex-col justify-center'>
-                                <motion.img src='assets/bg_assets/cover2.svg' variants={fadeInAnimation(2.3)} initial="hidden" animate="visible" className='mt-10 lg:h-[42vh] sm:h-[20vh] mb-24'></motion.img>
+                                <motion.img src='assets/bg_assets/cover.png' variants={fadeInAnimation(2.3)} initial="hidden" animate="visible" className='mt-10 lg:h-[42vh] sm:h-[20vh] mb-24'></motion.img>
                             </div>
                             <motion.div variants={fadeInAndExpandAnimation(2.3)} initial="hidden" animate="visible" className='w-full flex flex-col justify-center items-center gap-12'>
                                 <ThemeButton redirect={'/register'} text={"Play with Friends"}/>
@@ -640,7 +640,7 @@ export default function NewHome() {
 
                     <div className='grid grid-cols-2'>
                         <div className="pt-10 col-span-1 bg-black h-full flex justify-center">
-                            <motion.img ref={featuresGrid2} variants={fadeInAnimationDelay(3)} initial="hidden" animate={featureAnimationControls2} src="./assets/bg_assets/video-call-feature.svg" alt="" className='h-40 border border-black'/>
+                            <motion.img ref={featuresGrid2} variants={fadeInAnimationDelay(3)} initial="hidden" animate={featureAnimationControls2} src="./assets/bg_assets/video-call-feature.png" alt="" className='h-40 border border-black'/>
                         </div>
                         <div className="pt-10 col-span-1 bg-white flex justify-center">
                             <motion.img ref={featuresGrid2} variants={fadeInAnimationDelay(3)} initial="hidden" animate={featureAnimationControls2} src="./assets/bg_assets/chess-ai-2.png" alt="" className='h-[30vh] '/>
