@@ -46,7 +46,6 @@ function Board({isBlackBoardSet, playerId}) {
     const [movesHistoryArray, setMovesHistoryArray] = useState([]); // [ {color: "black", from: "e4", to: "e6", piece: "knight", hasCaptured: true, captured: "queen"}, {color: "black", from: "e4", to: "e6", piece: "knight", hasCaptured: false, captured: ""} ]
     const [eliminatedPiecesArray, setEliminatedPiecesArray] = useState([]); // [ {color: "black", piece: "queen"}, {color: "white", piece: "knight"}
 
-
     const saveToStorage = () => {
         let timeStamp = new Date().getTime();
         var dataToSend = {
@@ -318,7 +317,13 @@ function Board({isBlackBoardSet, playerId}) {
         
                 // for start game
                 if(code === 100){
-                  const { message } = parsedData;
+                console.log("receiving message in lobby", message)
+
+                  const { senderId, message } = parsedData;
+                  if(senderId !== playerId){
+                    console.log("setting should send ack to false")
+                    setChessExtra({...chessExtra, shouldSendAck:false})
+                  }
                   setMessage({code: 100, roomId: roomId, message: message?.message})
                 }
                 // for new move
@@ -432,7 +437,36 @@ function Board({isBlackBoardSet, playerId}) {
         })
     }
 
+    useEffect(() => {
+        let intervalId;
     
+        const sendAck = () => {
+            socket.send(`/app/ack/${roomId}`, {
+                code: 100,
+                messageId: "randomId",
+                roomId: roomId,
+                senderId: playerId,
+                message: {
+                    message: "Start Game",
+                },
+                timestamp: new Date().getTime(),
+            });
+        };
+    
+        if (socket.socket_client.connected) {
+            if (chessExtra?.shouldSendAck) {
+                intervalId = setInterval(sendAck, 1000);
+            } else {
+                clearInterval(intervalId);
+            }
+        }
+    
+        return () => {
+            clearInterval(intervalId);
+        };
+    }, [chessExtra?.shouldSendAck, socket.socket_client.onChangeState]);
+    
+
     useEffect(() => {
         if(socket.socket_client.connected){
             handleReconnectAndNameFetch();
@@ -440,6 +474,7 @@ function Board({isBlackBoardSet, playerId}) {
     }, [socket.socket_client.onChangeState])
 
     useEffect(()=>{
+        setChessExtra({...chessExtra, shouldSendAck:true})
         getAndSendData();
     }, [])
 

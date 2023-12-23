@@ -34,7 +34,7 @@ export default function NewHome() {
             selfName:"", opponentName:""
         })
 
-        setChessExtra({ call:false, selfName:"", opponentName:""})
+        setChessExtra({ call:false, selfName:"", opponentName:"", shouldSendAck:false})
     }, [])
 
     useEffect(() => {
