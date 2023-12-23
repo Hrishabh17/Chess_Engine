@@ -43,9 +43,7 @@ export default function NewLobby() {
             // for start game
             if(code === 100){
               const { senderId, message } = parsedData;
-              console.log("received start game in lobby ", senderId, playerId);
               if(senderId!==playerId && senderId !== 'server' && senderId !== undefined && senderId !== null && senderId !== ""){
-                console.log("sender id is not equal to player id");
                 setChessExtra({...chessExtra, shouldSendAck:false})
               }
               // socket.send(`/app/${roomId}`, JSON.stringify({code: 300, message: {message: "Subscribed to Room"}})

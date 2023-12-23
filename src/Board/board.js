@@ -317,11 +317,8 @@ function Board({isBlackBoardSet, playerId}) {
         
                 // for start game
                 if(code === 100){
-                console.log("receiving message in lobby", message)
-
                   const { senderId, message } = parsedData;
                   if(senderId!==playerId && senderId !== 'server' && senderId !== undefined && senderId !== null && senderId !== ""){
-                    console.log("setting should send ack to false")
                     setChessExtra({...chessExtra, shouldSendAck:false})
                   }
                   setMessage({code: 100, roomId: roomId, message: message?.message})
@@ -438,8 +435,8 @@ function Board({isBlackBoardSet, playerId}) {
     }
 
     useEffect(() => {
-        let intervalId;
-    
+        if(chessExtra?.shouldSendAck === false) return;
+
         const sendAck = () => {
             socket.send(`/app/ack/${roomId}`, {
                 code: 100,
@@ -447,31 +444,24 @@ function Board({isBlackBoardSet, playerId}) {
                 roomId: roomId,
                 senderId: playerId,
                 message: {
-                    message: "Start Game",
+                    message: "Start Game"
                 },
                 timestamp: new Date().getTime(),
             });
         };
-    
-        if (socket.socket_client.connected) {
-            if (chessExtra?.shouldSendAck) {
-                intervalId = setInterval(sendAck, 1000);
-            } else {
-                clearInterval(intervalId);
-            }
+
+        if (socket?.socket_client?.connected && chessExtra?.shouldSendAck) {
+            sendAck()             
         }
-    
-        return () => {
-            clearInterval(intervalId);
-        };
-    }, [chessExtra?.shouldSendAck, socket.socket_client.onChangeState]);
-    
+    }, [chessExtra?.shouldSendAck, socket?.socket_client?.onChangeState]);
 
     useEffect(() => {
-        if(socket.socket_client.connected){
-            handleReconnectAndNameFetch();
+        if(socket?.socket_client?.connected){
+            if(chessExtra?.opponentName === ""){
+                handleReconnectAndNameFetch();
+            }
         }
-    }, [socket.socket_client.onChangeState])
+    }, [socket?.socket_client?.onChangeState, chessExtra?.opponentName])
 
     useEffect(()=>{
         setChessExtra({...chessExtra, shouldSendAck:true})
