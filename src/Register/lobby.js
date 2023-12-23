@@ -43,8 +43,8 @@ export default function NewLobby() {
             // for start game
             if(code === 100){
               const { senderId, message } = parsedData;
-              console.log("received start game in lobby");
-              if(senderId!==playerId){
+              console.log("received start game in lobby ", senderId, playerId);
+              if(senderId!==playerId && senderId !== 'server'){
                 console.log("sender id is not equal to player id");
                 setChessExtra({...chessExtra, shouldSendAck:false})
               }
