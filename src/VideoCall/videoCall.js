@@ -128,6 +128,15 @@ export default function VideoCall({roomId, playerId}) {
             })
 
             setSimplePeer(sp)
+
+            setTimeout(() => {
+                if (connectionStatus !== connStatus.CONNECTED) {
+                    handleEndCall(true);
+                    mediaStream?.getTracks().forEach((track) => {
+                        track.stop();
+                    });
+                }
+            }, 10000);
         })
     }
 
@@ -188,8 +197,8 @@ export default function VideoCall({roomId, playerId}) {
     const handleEndCall = (isFirst) => {
         setConnectionStatus(connStatus.STAGE)
         setChessExtra({...chessExtra, call:false})
-        videoSelf.current.srcObject = null
-        videoOther.current.srcObject = null
+        if(videoSelf?.current) videoSelf.current.srcObject = null
+        if(videoOther?.current) videoOther.current.srcObject = null
         if(simplePeer){
             simplePeer?.destroy()
             setSimplePeer(null)

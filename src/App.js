@@ -15,8 +15,8 @@ import ComingSoon from './NewHome/comingSoon';
 
 function App() {
   const [message, setMessage] = useState(null)
-  const [chessUtils, setChessUtils] = useState(null)
-  const [chessExtra, setChessExtra] = useState(null)
+  const [chessUtils, setChessUtils] = useState()
+  const [chessExtra, setChessExtra] = useState({ call:false, selfName:"", opponentName:"", shouldSendAck:true})
 
   useEffect(() => {
     if (chessUtils === null) {
@@ -37,6 +37,14 @@ function App() {
     const theme = localStorage.getItem('8by8Theme');
     if(theme!==null && theme !== "undefined"){
       setChessUtils(JSON.parse(theme));
+    }
+    else{
+        setChessUtils({
+          bg:"bg-[#303030]", ring:"ring-[#303030]", 
+          text:"text-[#303030]", border:"border-[#303030]", bgHover:"hover:bg-[#303030]", 
+          hex:"#303030", chessBg:"bg-[#30303098]", call:false,
+          selfName:"", opponentName:""
+      })
     }
   }, [])
   
