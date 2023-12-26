@@ -130,13 +130,13 @@ export default function VideoCall({roomId, playerId}) {
             setSimplePeer(sp)
 
             setTimeout(() => {
-                if (connectionStatus !== connStatus.CONNECTED) {
+                if (otherStream === null) {
                     handleEndCall(true);
                     mediaStream?.getTracks().forEach((track) => {
                         track.stop();
                     });
                 }
-            }, 10000);
+            }, 20000);
         })
     }
 
