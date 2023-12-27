@@ -9,6 +9,7 @@ import {ChessContext, ChessExtraContext, ChessUtilsContext} from './Context/cont
 import NewHome from './NewHome/newHome';
 import NotFound from './404';
 import NewLobby from './Register/lobby';
+import ComingSoon from './NewHome/comingSoon';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
                   <Route path='/join/:roomId/:playerId' element={<RegisterSecondUser/>} />
                   <Route path='/lobby' element={<NewLobby/>} />
                   <Route path="/playground/:roomId" element={<Playground/>} />
+                  <Route path="/computer" element={<ComingSoon/>} />
                   <Route path="*" element={<NotFound/>} />
                 </Routes>
             </Router>
