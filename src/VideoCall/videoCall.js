@@ -128,15 +128,6 @@ export default function VideoCall({roomId, playerId}) {
             })
 
             setSimplePeer(sp)
-
-            setTimeout(() => {
-                if (connectionStatus !== connStatus.CONNECTED) {
-                    handleEndCall(true);
-                    mediaStream?.getTracks().forEach((track) => {
-                        track.stop();
-                    });
-                }
-            }, 10000);
         })
     }
 
@@ -247,6 +238,10 @@ export default function VideoCall({roomId, playerId}) {
                             <span className={`animate-ping`} style={{ animationDelay: '0.5s' }}>.</span>
                             <span className={`animate-ping`} style={{ animationDelay: '0.9s' }}>.</span>
                             <span className={`animate-ping`} style={{ animationDelay: '0s' }}>.</span>
+                        </span>
+                        <span onClick={()=>handleEndCall(true)} className={`absolute bottom-2 flex flex-row justify-center items-center gap-2 bg-white text-black border-2 ${chessUtils?.border} box-shadow px-5 py-1 cursor-pointer`}>
+                            <PiPhoneFill className={`text-red-500 text-[20px] rotate-[135deg] `}/>
+                            <h1 className={`text-xs font-semibold font-[CenturyGothic]`}>End Call</h1>
                         </span>
                     </h1>
                 </>

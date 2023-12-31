@@ -12,7 +12,6 @@ import NotFound from './404';
 import NewLobby from './Register/lobby';
 import ComingSoon from './NewHome/comingSoon';
 
-
 function App() {
   const [message, setMessage] = useState(null)
   const [chessUtils, setChessUtils] = useState()
