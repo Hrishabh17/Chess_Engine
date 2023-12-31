@@ -84,8 +84,7 @@ export default function NewLobby() {
 
     useEffect(() => {
         if(message?.code === 100){
-            navigate('/video', {state: {roomId: roomId, playerId: playerId}})
-            // navigate(`/playground/${roomId}`, {state: {isBlackBoard:color?.toLowerCase()==="white"?false:true, roomId: roomId, playerId: playerId}})
+            navigate(`/playground/${roomId}`, {state: {isBlackBoard:color?.toLowerCase()==="white"?false:true, roomId: roomId, playerId: playerId}})
         }
     }, [message])
 
