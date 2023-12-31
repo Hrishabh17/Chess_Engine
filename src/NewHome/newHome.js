@@ -8,7 +8,7 @@ import { useNavigate } from "react-router";
 import { ChessUtilsContext, ChessExtraContext } from '../Context/context';
 
 export default function NewHome() {
-    const isMobile = useMediaQuery({ query: '(max-width: 760px)' })
+    const isMobile = useMediaQuery({ query: '(max-width: 860px)' })
     const navigate = useNavigate()
     const {chessUtils, setChessUtils} = useContext(ChessUtilsContext);
     const {chessExtra, setChessExtra} = useContext(ChessExtraContext);
@@ -28,9 +28,9 @@ export default function NewHome() {
 
     useEffect(()=>{
         setChessUtils({
-            bg:"bg-[#303030]", ring:"ring-[#303030]", 
-            text:"text-[#303030]", border:"border-[#303030]", bgHover:"hover:bg-[#303030]", 
-            hex:"#303030", chessBg:"bg-[#30303098]", call:false,
+            bg:"bg-[#000000]", ring:"ring-[#000000]", 
+            text:"text-[#000000]", border:"border-[#000000]", bgHover:"hover:bg-[#000000]", 
+            hex:"#000000", chessBg:"bg-[#00000098]", call:false,
             selfName:"", opponentName:""
         })
 
@@ -186,8 +186,8 @@ export default function NewHome() {
             opacity:1,
             // scale:1,
             transition:{
-                delay:i*0.2,
-                duration:2,
+                delay:i*0.1,
+                duration:1.2,
                 type: "spring",
                 damping: 12,
                 stiffness: 100,
@@ -279,44 +279,80 @@ export default function NewHome() {
     })
 
     const stepGridItems = [
-        { id:1 , bgColor: "black", textColor: "white", title: "Play With Friends", description: "Click on the 'Play with Friends' button to kick start a new chess match.", buttonText: "PLAY WITH FRIENDS" },
-        { id:2 , bgColor: "black", textColor: "white", title: "Register", description: "Fill in the required details to register for the match and click on 'Generate' to receive your unique match link.", buttonText: "GENERATE" },
-        { id:3 , bgColor: "white", textColor: "black", title: "Invite Friend", description: "Copy the link generated and share it with your friends to invite them for a pawn tug of war ", buttonText: "LET’S PLAY" },
-        { id:4 , bgColor: "white", textColor: "black", title: "Play !", description: "Once your friend joins in, the match will begin automatically.", buttonText: "Chessboard" },
+        { id:1 , bgColor: chessUtils?.bg, textColor: "text-white", title: "Play With Friends", description: "Click on the 'Play with Friends' button to kick start a new chess match.", buttonText: "PLAY WITH FRIENDS" },
+        { id:2 , bgColor: chessUtils?.bg, textColor: "text-white", title: "Register", description: "Fill in the required details to register for the match and click on 'Generate' to receive your unique match link.", buttonText: "GENERATE" },
+        { id:3 , bgColor: "bg-white", textColor: chessUtils?.text, title: "Invite Friend", description: "Copy the link generated and share it with your friends to invite them for a pawn tug of war ", buttonText: "LET’S PLAY" },
+        { id:4 , bgColor: "bg-white", textColor: chessUtils?.text, title: "Play !", description: "Once your friend joins in, the match will begin automatically.", buttonText: "Chessboard" },
     ];
 
     const featureGridItems = [
-        {id:1, bgColor: "black", textColor: "white", title: "MULTIPLE THEMES", description: "Choose from a variety of visually appealing themes for a personalized gaming experience."},
-        {id:2, bgColor: "white", textColor: "black", title: "IN-GAME CHAT", description: "Stay connected! Chat with your friend while you strategize your next move."},
-        {id:3, bgColor: "black", textColor: "white", title: "VIDEO CALLS", description: "Make your game more interactive with our built-in video call feature."},
-        {id:4, bgColor: "white", textColor: "black", title: "CHESS AI", description: "Challenge yourself with our advanced Chess AI. Perfect your skills anytime, anywhere."},
+        {id:1, bgColor: chessUtils?.bg, textColor: "white", title: "MULTIPLE THEMES", description: "Choose from a variety of visually appealing themes for a personalized gaming experience."},
+        {id:2, bgColor: "white", textColor: chessUtils?.text, title: "IN-GAME CHAT", description: "Stay connected! Chat with your friend while you strategize your next move."},
+        {id:3, bgColor: chessUtils?.bg, textColor: "white", title: "VIDEO CALLS", description: "Make your game more interactive with our built-in video call feature."},
+        {id:4, bgColor: "white", textColor: chessUtils?.text, title: "CHESS AI", description: "Challenge yourself with our advanced Chess AI. Perfect your skills anytime, anywhere."},
     ]
 
     const VerticalSpace = ({h})=>{
         return(
         <div className={`h-${h} grid grid-cols-2`}>
-            <div className={`pt-${h} col-span-1 bg-black`}></div>
+            <div className={`pt-${h} col-span-1 ${chessUtils?.bg}`}></div>
             <div className="col-span-1 bg-white"></div>
         </div>)
     }
 
-    const borderColorLeft=(index)=> index===0?'border-r-[2px] border-white':index===2?'border-r-[2px] border-black':'';
+    const borderColorLeft=(index)=> index===0?'border-r-[2px] border-white':index===2?'border-r-[2px]'+chessUtils?.border:'';
 
     return (
-        <div className='h-full bg-black select-none'>
+        <div className={`h-full ${chessUtils?.bg} select-none`}>
         {isMobile?
         (<>
-            <div className="h-full w-full bg-black select-none overflow-x-hidden">
+            <div className={`h-full w-full ${chessUtils?.bg} select-none overflow-x-hidden`}>
                 <div className="pt-6 min-h-[2rem] min-w-full flex flex-row">
                     <motion.div variants={fadeInAnimation(1.3)} initial="hidden" animate="visible" className="ml-4 p-1 px-2 text-white font-[CenturyGothic] border-2 text-sm border-white">Choose Your Theme</motion.div>
                     <motion.div variants={paletteAnimation} initial="hidden" animate="visible" className='mr-4 w-max overflow-hidden flex justify-center'>
-                        <div className="min-h-[1.5rem] max-h-[1.8rem] flex flex-row justify-center items-center">
-                            <motion.div whileHover={{scale:1.2}} className="ml-10 min-h-[1.5rem] max-h-[1.8rem] min-w-[5vw] bg-red-500 hover:border-2 hover:border-white"></motion.div>
-                            <motion.div whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[5.5vw] bg-yellow-500 hover:border-2 hover:border-white"></motion.div>
-                            <motion.div whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[6vw] bg-green-700 hover:border-2 hover:border-white"></motion.div>
-                            <motion.div whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[6.5vw] bg-blue-600 hover:border-2 hover:border-white"></motion.div>
-                            <motion.div whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[7vw] bg-violet-800 hover:border-2 hover:border-white"></motion.div>
-                            <motion.div whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[7.5vw] bg-pink-500 hover:border-2 hover:border-white"></motion.div>
+                        <div className="min-h-[1.5rem] max-h-[1.8rem] flex flex-row justify-center items-center border-2 border-white ml-10">
+                            <motion.div onClick={()=>setChessUtils({
+                                bg:"bg-[#000000]", ring:"ring-[#000000]", 
+                                text:"text-[#000000]", border:"border-[#000000]", bgHover:"hover:bg-[#000000]", 
+                                hex:"#000000", chessBg:"bg-[#00000098]", call:false,
+                                selfName:"", opponentName:""
+                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[5vw] bg-[#000000] hover:border-2 hover:border-white"></motion.div>
+                            <motion.div onClick={()=>setChessUtils({
+                                bg:"bg-[#CC2936]", ring:"ring-[#CC2936]", 
+                                text:"text-[#CC2936]", border:"border-[#CC2936]", bgHover:"hover:bg-[#CC2936]", 
+                                hex:"#CC2936", chessBg:"bg-[#CC293698]", call:false,
+                                selfName:"", opponentName:""
+                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[5vw] bg-[#CC2936] hover:border-2 hover:border-white"></motion.div>
+                            <motion.div onClick={()=>setChessUtils({
+                                bg:"bg-[#E57C04]", ring:"ring-[#E57C04]", 
+                                text:"text-[#E57C04]", border:"border-[#E57C04]", bgHover:"hover:bg-[#E57C04]", 
+                                hex:"#E57C04", chessBg:"bg-[#E57C0498]", call:false,
+                                selfName:"", opponentName:""
+                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[5.5vw] bg-[#E57C04] hover:border-2 hover:border-white"></motion.div>
+                            <motion.div onClick={()=>setChessUtils({
+                                bg:"bg-[#338E58]", ring:"ring-[#338E58]", 
+                                text:"text-[#338E58]", border:"border-[#338E58]", bgHover:"hover:bg-[#338E58]", 
+                                hex:"#338E58", chessBg:"bg-[#338E5898]", call:false,
+                                selfName:"", opponentName:""
+                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[6vw] bg-[#338E58] hover:border-2 hover:border-white"></motion.div>
+                            <motion.div onClick={()=>setChessUtils({
+                                bg:"bg-[#6356E5]", ring:"ring-[#6356E5]", 
+                                text:"text-[#6356E5]", border:"border-[#6356E5]", bgHover:"hover:bg-[#6356E5]", 
+                                hex:"#6356E5", chessBg:"bg-[#6356E598]", call:false,
+                                selfName:"", opponentName:""
+                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[6.5vw] bg-[#6356E5] hover:border-2 hover:border-white"></motion.div>
+                            <motion.div onClick={()=>setChessUtils({
+                                bg:"bg-[#111D5E]", ring:"ring-[#111D5E]", 
+                                text:"text-[#111D5E]", border:"border-[#111D5E]", bgHover:"hover:bg-[#111D5E]", 
+                                hex:"#111D5E", chessBg:"bg-[#111D5E98]", call:false,
+                                selfName:"", opponentName:""
+                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[7vw] bg-[#111D5E] hover:border-2 hover:border-white"></motion.div>
+                            <motion.div onClick={()=>setChessUtils({
+                                bg:"bg-[#420217]", ring:"ring-[#420217]", 
+                                text:"text-[#420217]", border:"border-[#420217]", bgHover:"hover:bg-[#420217]", 
+                                hex:"#420217", chessBg:"bg-[#42021798]", call:false,
+                                selfName:"", opponentName:""
+                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[7.5vw] bg-[#420217] hover:border-2 hover:border-white"></motion.div>
                         </div>
                     </motion.div>
                 </div>
@@ -366,12 +402,12 @@ export default function NewHome() {
                         
                     <div className='mt-6 h-[20vh] bg-white'>
                          <motion.div variants={fadeInAndExpandAnimation(2.3)} initial="hidden" animate="visible" className='mt-2 w-full flex flex-col justify-center items-center gap-4'>
-                            <button onClick={()=>navigate('/register')} className='mt-4 w-[60vw] border-[0.2rem] px-4 py-2 border-black text-xl font-bold flex flex-row justify-center items-center gap-4 bg-white'>Play with Friends</button>
-                            <button onClick={()=>navigate('/coming-soon')} className='mt-2 w-[60vw] border-[0.2rem] px-4 py-2 border-black text-xl font-bold flex flex-row justify-center items-center gap-4 bg-white'>Play with Computer</button>
+                            <button onClick={()=>navigate('/register')} className={`mt-4 w-[60vw] border-[0.2rem] px-4 py-2 ${chessUtils?.border} text-xl font-bold flex flex-row justify-center items-center gap-4 bg-white`}>Play with Friends</button>
+                            <button onClick={()=>navigate('/coming-soon')} className={`mt-2 w-[60vw] border-[0.2rem] px-4 py-2 ${chessUtils?.border} text-xl font-bold flex flex-row justify-center items-center gap-4 bg-white`}>Play with Computer</button>
                         </motion.div>
                     </div>
-                    <div className='pl-6 h-full bg-black flex flex-col'>
-                        <div id='title2' className= {`pt-10 pb-10 pr-2 col-span-1 bg-black text-white flex 
+                    <div className={`pl-6 h-full ${chessUtils?.bg} flex flex-col`}>
+                        <div id='title2' className= {`pt-10 pb-10 pr-2 col-span-1 ${chessUtils?.bg} text-white flex 
                         justify-start`}>
                             <motion.div ref={steps}  variants={fadeInAnimation(1)} initial="hidden" animate={animationControls} className='text-[3rem] tracking-widest' >
                                 STEPS
@@ -380,7 +416,7 @@ export default function NewHome() {
                         <div className='text-white flex flex-col'>
                             {
                                 stepGridItems.map((item, index) => (
-                                    <motion.div ref={numberGrid} variants={fadeInAnimationDelay(index)} initial="hidden" animate={animationControls} className='flex flex-row'>
+                                    <motion.div ref={numberGrid} variants={fadeInAnimationDelay(1)} initial="hidden" animate={animationControls} className='flex flex-row'>
                                     <motion.div id='title2' className='text-[6rem]'>{item.id}</motion.div>
                                     <motion.div className='ml-6 flex flex-col font-[CenturyGothic]'>
                                         <div className='mt-3 text-[2rem]'>{item.title}</div>
@@ -393,7 +429,7 @@ export default function NewHome() {
                     </div>
                 </div>
                 <div className='h-max bg-white '>
-                    <div className='pl-4 pt-12 flex justify-start'><motion.div ref={numberGrid} variants={fadeInAnimation(1)} initial="hidden" animate={featureAnimationControls} id='title2' className='mr-2 text-[3rem] text-black tracking-wider'>FEATURES</motion.div></div>
+                    <div className='pl-4 pt-12 flex justify-start'><motion.div ref={numberGrid} variants={fadeInAnimation(1)} initial="hidden" animate={featureAnimationControls} id='title2' className={`mr-2 text-[3rem] ${chessUtils?.text} tracking-wider`}>FEATURES</motion.div></div>
                     <motion.div ref={featuresGrid} variants={fadeInAnimationDelay(1)} initial="hidden" animate={featureAnimationControls} className='pl-4 pt-4 font-[CenturyGothic] font-bold text-[1.6rem] flex flex-col
                     justify-start tracking-wider'>
                         {
@@ -402,8 +438,8 @@ export default function NewHome() {
                                     <div>
                                     {item.title}
                                     </div>
-                                    <div className='pt-2
-                                    w-4/5 font-[CenturyGothic] font-normal text-[1rem] text-black'>{item.description}</div>
+                                    <div className={`pt-2
+                                    w-4/5 font-[CenturyGothic] font-normal text-[1rem] ${chessUtils?.text}`}>{item.description}</div>
                                     {item.id===1?(
                                         <div className='pt-8 flex flex-col justify-center gap-8 mb-10'>
                                             <img src="./assets/bg_assets/color-palette.svg" alt="for theme change" className='h-12'/>
@@ -426,18 +462,54 @@ export default function NewHome() {
             </div>
         </>):(
             <>
-                <div className="h-full bg-black grid grid-cols-12">
-                    <div className="bg-black w-full col-span-6 pb-10">
+                <div className={`h-full ${chessUtils?.bg} grid grid-cols-12`}>
+                    <div className={`${chessUtils?.bg} w-full col-span-6 pb-10`}>
                         <div className="mt-6 min-h-[2rem] min-w-full flex flex-row">
                             <motion.div variants={fadeInAnimation(1.3)} initial="hidden" animate="visible" className="ml-16 py-1 px-4 flex flex-col justify-center items-center border-[0.1rem] border-white font-[CenturyGothic] text-sm text-white ">Choose your theme</motion.div>
                             <motion.div variants={paletteAnimation} initial="hidden" animate="visible" className='w-max overflow-hidden flex justify-center'>
-                                <div className="min-h-[1.5rem] max-h-[1.8rem] flex flex-row justify-center items-center">
-                                    <motion.div whileHover={{scale:1.2}} className="ml-10 min-h-[1.5rem] max-h-[1.8rem] min-w-[2vw] bg-red-500 hover:border-2 hover:border-white"></motion.div>
-                                    <motion.div whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[2.5vw] bg-yellow-500 hover:border-2 hover:border-white"></motion.div>
-                                    <motion.div whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[3vw] bg-green-700 hover:border-2 hover:border-white"></motion.div>
-                                    <motion.div whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[3.5vw] bg-blue-600 hover:border-2 hover:border-white"></motion.div>
-                                    <motion.div whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[4vw] bg-violet-800 hover:border-2 hover:border-white"></motion.div>
-                                    <motion.div whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[4.5vw] bg-pink-500 hover:border-2 hover:border-white"></motion.div>
+                                <div className="min-h-[1.5rem] max-h-[1.8rem] flex flex-row justify-center items-center border-2 border-white ml-10">
+                                    <motion.div onClick={()=>setChessUtils({
+                                        bg:"bg-[#000000]", ring:"ring-[#000000]", 
+                                        text:"text-[#000000]", border:"border-[#000000]", bgHover:"hover:bg-[#000000]", 
+                                        hex:"#000000", chessBg:"bg-[#00000098]", call:false,
+                                        selfName:"", opponentName:""
+                                    })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[2vw] bg-[#000000] hover:border-2 hover:border-white"></motion.div>
+                                    <motion.div onClick={()=>setChessUtils({
+                                        bg:"bg-[#CC2936]", ring:"ring-[#CC2936]", 
+                                        text:"text-[#CC2936]", border:"border-[#CC2936]", bgHover:"hover:bg-[#CC2936]", 
+                                        hex:"#CC2936", chessBg:"bg-[#CC293698]", call:false,
+                                        selfName:"", opponentName:""
+                                    })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[2vw] bg-[#CC2936] hover:border-2 hover:border-white"></motion.div>
+                                    <motion.div onClick={()=>setChessUtils({
+                                        bg:"bg-[#E57C04]", ring:"ring-[#E57C04]", 
+                                        text:"text-[#E57C04]", border:"border-[#E57C04]", bgHover:"hover:bg-[#E57C04]", 
+                                        hex:"#E57C04", chessBg:"bg-[#E57C0498]", call:false,
+                                        selfName:"", opponentName:""
+                                    })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[2.5vw] bg-[#E57C04] hover:border-2 hover:border-white"></motion.div>
+                                    <motion.div onClick={()=>setChessUtils({
+                                        bg:"bg-[#338E58]", ring:"ring-[#338E58]", 
+                                        text:"text-[#338E58]", border:"border-[#338E58]", bgHover:"hover:bg-[#338E58]", 
+                                        hex:"#338E58", chessBg:"bg-[#338E5898]", call:false,
+                                        selfName:"", opponentName:""
+                                    })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[3vw] bg-[#338E58] hover:border-2 hover:border-white"></motion.div>
+                                    <motion.div onClick={()=>setChessUtils({
+                                        bg:"bg-[#6356E5]", ring:"ring-[#6356E5]", 
+                                        text:"text-[#6356E5]", border:"border-[#6356E5]", bgHover:"hover:bg-[#6356E5]", 
+                                        hex:"#6356E5", chessBg:"bg-[#6356E598]", call:false,
+                                        selfName:"", opponentName:""
+                                    })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[3.5vw] bg-[#6356E5] hover:border-2 hover:border-white"></motion.div>
+                                    <motion.div onClick={()=>setChessUtils({
+                                        bg:"bg-[#111D5E]", ring:"ring-[#111D5E]", 
+                                        text:"text-[#111D5E]", border:"border-[#111D5E]", bgHover:"hover:bg-[#111D5E]", 
+                                        hex:"#111D5E", chessBg:"bg-[#111D5E98]", call:false,
+                                        selfName:"", opponentName:""
+                                    })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[4vw] bg-[#111D5E] hover:border-2 hover:border-white"></motion.div>
+                                    <motion.div onClick={()=>setChessUtils({
+                                        bg:"bg-[#420217]", ring:"ring-[#420217]", 
+                                        text:"text-[#420217]", border:"border-[#420217]", bgHover:"hover:bg-[#420217]", 
+                                        hex:"#420217", chessBg:"bg-[#42021798]", call:false,
+                                        selfName:"", opponentName:""
+                                    })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[4.5vw] bg-[#420217] hover:border-2 hover:border-white"></motion.div>
                                 </div>
                             </motion.div>
                         </div>
@@ -488,7 +560,7 @@ export default function NewHome() {
                             {/* <motion.img variants={fadeInAnimation(2.3)} initial="hidden" animate="visible" src="./chessfront.svg" className='mt-10 xl:h-52 lg:h-24 md:h-16 sm:h-16  mb-24' /> */}
                             <div className='flex flex-row'>
                             {titleSideLetters.map((letter, index) => (
-                                    <motion.div id='title' variants={animateText(index)} initial="hidden" animate="visible" className='mr-3 text-2xl font-[CenturyGothic] tracking-wider'>{letter}</motion.div>
+                                    <motion.div id='title' variants={animateText(index)} initial="hidden" animate="visible" className={`mr-3 text-2xl font-[CenturyGothic] tracking-wider ${chessUtils?.text}`}>{letter}</motion.div>
                             ))}
                             </div>
                             {/* <motion.div id="title" variants={animateText(2.3)} initial="hidden" animate="visible" whileHover={{scale:1.3}} className='text-2xl font-[CenturyGothic] tracking-wider'>PLAY. CHAT. CONNECT.</motion.div> */}
@@ -496,28 +568,28 @@ export default function NewHome() {
                                 <motion.img src='assets/bg_assets/cover2.svg' variants={fadeInAnimation(2.3)} initial="hidden" animate="visible" className='mt-10 lg:h-[42vh] sm:h-[20vh] mb-24'></motion.img>
                             </div>
                             <motion.div variants={fadeInAndExpandAnimation(2.3)} initial="hidden" animate="visible" className='w-full flex flex-col justify-center items-center gap-12'>
-                                <ThemeButton redirect={'/register'} text={"Play with Friends"}/>
-                                <ThemeButton redirect={'/coming-soon'} text={"Play with Computer"}/>
+                                <ThemeButton textColor={chessUtils?.text} color={chessUtils?.bg} border={chessUtils?.border} redirect={'/register'} text={"Play with Friends"}/>
+                                <ThemeButton textColor={chessUtils?.text} border = {chessUtils?.border} color={chessUtils?.bg} redirect={'/coming-soon'} text={"Play with Computer"}/>
                             </motion.div>
                         </div>
                     </div>
                 </div>
                 <div id='title2' className='grid grid-cols-2 text-6xl'>
-                    <div className= {`pl-16 pt-10 pb-10 pr-2 col-span-1 bg-black text-white flex 
+                    <div className= {`pl-16 pt-10 pb-10 pr-2 col-span-1 ${chessUtils?.bg} text-white flex 
                     justify-start`}>
                         <motion.div ref={steps}  variants={fadeInAnimation(1)} initial="hidden" animate={animationControls} className='text-[3.5rem] tracking-widest' >
                             STEPS
                         </motion.div>
                     </div>
-                    <div className="pt-10 pb-10 col-span-1 bg-white text-black "></div>
+                    <div className={`pt-10 pb-10 col-span-1 bg-white ${chessUtils?.text} `}></div>
                 </div>
                 <div className='h-max flex flex-col'>
                     <div className="grid grid-cols-4">
                         {
                             stepGridItems.map((item, index) => (
                                 <div className={`col-span-1 ${borderColorLeft(index)} `}>
-                                    <div id='title2' className={`pl-16 col-span-1 bg-${item.bgColor} text-${item.textColor}`} >
-                                        <motion.div ref={numberGrid} variants={fadeInAnimationDelay(index)} initial="hidden" animate={animationControls} id='title2' className={`text-${item.textColor} text-[6rem] `} >{item.id}.</motion.div>
+                                    <div id='title2' className={`pl-16 col-span-1 ${item.bgColor} ${item.textColor}`} >
+                                        <motion.div ref={numberGrid} variants={fadeInAnimationDelay(index)} initial="hidden" animate={animationControls} id='title2' className={`${item.textColor} text-[6rem] `} >{item.id}.</motion.div>
                                     </div>
                                 </div>
                             ))
@@ -526,7 +598,7 @@ export default function NewHome() {
                     <div className='grid grid-cols-4'>
                         {
                             stepGridItems.map((item, index) => (
-                                <div className={`h-full pl-16 col-span-1 bg-${item.bgColor} text-${item.textColor} ${borderColorLeft(index)}`} >
+                                <div className={`h-full pl-16 col-span ${item.bgColor} ${item.textColor} ${borderColorLeft(index)}`} >
                                     <motion.div ref={numberGrid} variants={fadeInAnimationDelay(index)} initial="hidden" animate={animationControls} className='text-[1.85rem] font-[CenturyGothic]'>{item.title}</motion.div>
                                 </div>
                             ))
@@ -536,7 +608,7 @@ export default function NewHome() {
 
                         {
                             stepGridItems.map((item, index) => (
-                                <div className={`pl-16 col-span-1 bg-${item.bgColor} text-${item.textColor} ${borderColorLeft(index)}`} >
+                                <div className={`pl-16 col-span-1 ${item.bgColor} ${item.textColor} ${borderColorLeft(index)}`} >
                                     <motion.div ref={numberGrid} variants={fadeInAnimationDelay(index)} initial="hidden" animate={animationControls} className='mt-12 font-[CenturyGothic] w-4/5'>{item.description}</motion.div>  
                                 </div>
                             ))
@@ -545,13 +617,13 @@ export default function NewHome() {
                     <div className='grid grid-cols-4'>
                         {
                             stepGridItems.map((item, index) => (
-                                <div className={`pl-16 pb-4 col-span-1 bg-${item.bgColor} text-${item.textColor} ${borderColorLeft(index)}`} >
+                                <div className={`pl-16 pb-4 col-span-1 ${item.bgColor} -b${item.textColor} ${borderColorLeft(index)}`} >
                                     {item.id==4?(
                                         <div className='mt-10 w-4/5'>
                                             <motion.img ref={numberGrid} variants={fadeInAnimationDelay(index)} initial="hidden" animate={animationControls} src="./assets/bg_assets/step4image.svg" alt="chessboard" />
                                         </div>
                                     ):(
-                                        <motion.div ref={numberGrid} variants={fadeInAnimationDelay(index)} initial="hidden" animate={animationControls} className={`mt-24 py-2 px-1 w-4/5 bg-white text-black border-[0.15rem] border-black flex flex-row justify-center items-center font-bold text-[1.1rem] font-[CenturyGothic] tracking-wide`}>{item.buttonText} <IoIosArrowRoundForward className='ml-2' size={30}/></motion.div>
+                                        <motion.div ref={numberGrid} variants={fadeInAnimationDelay(index)} initial="hidden" animate={animationControls} className={`mt-24 py-2 px-1 w-4/5 bg-white ${chessUtils?.text} border-[0.15rem] ${chessUtils?.border} flex flex-row justify-center items-center font-bold text-[1.1rem] font-[CenturyGothic] tracking-wide`}>{item.buttonText} <IoIosArrowRoundForward className='ml-2' size={30}/></motion.div>
                                     )
                                     }
                                 </div>
@@ -560,12 +632,12 @@ export default function NewHome() {
                     </div>
                 </div>
                 <div className='grid grid-cols-2 h-5 lg:h-10'>
-                    <div className="col-span-1 bg-black"></div>
+                    <div className={`col-span-1 ${chessUtils?.bg}`}></div>
                     <div className="col-span-1 bg-white"></div>
                 </div>
                 <div className='h-full flex flex-col'>
                     <div className='grid grid-cols-2'>
-                        <div className='pl-10 pt-12 col-span-1 bg-black flex justify-start'><motion.div ref={numberGrid} variants={fadeInAnimation(1)} initial="hidden" animate={featureAnimationControls} id='title2' className='mr-2 text-[3.5rem] text-white tracking-widest'>FEATURES</motion.div></div>
+                    <div className={`pl-10 pt-12 col-span-1 ${chessUtils?.bg} flex justify-start`}><motion.div ref={numberGrid} variants={fadeInAnimation(1)} initial="hidden" animate={featureAnimationControls} id='title2' className='mr-2 text-[3.5rem] text-white tracking-widest'>FEATURES</motion.div></div>
                         <div className="col-span-1 bg-white h-full"></div>
                     </div>
                     {/* <div className='grid grid-cols-2'>
@@ -574,12 +646,12 @@ export default function NewHome() {
                     </div> */}
                     <VerticalSpace h='10'></VerticalSpace>
                     <div className="w-full flex flex-row text-[1.8rem] tracking-widest font-[CenturyGothic] font-semibold">
-                        <div className="w-1/2 bg-black text-white flex flex-col items-center">
+                        <div className={`w-1/2 ${chessUtils?.bg} text-white flex flex-col items-center`}>
                             <motion.div ref={featuresGrid} variants={fadeInAnimationDelay(1)} initial="hidden" animate={featureAnimationControls}>
                                 MULTIPLE&nbsp;&nbsp;THEMES
                             </motion.div>
                         </div>
-                        <div className="pl-10 w-1/2 bg-white text-black flex flex-col items-center">
+                        <div className={`pl-10 w-1/2 bg-white ${chessUtils?.text} flex flex-col items-center`}>
                             <motion.div ref={featuresGrid} variants={fadeInAnimationDelay(1)} initial="hidden" animate={featureAnimationControls}>
                             IN-GAME&nbsp;&nbsp;CHAT
                             </motion.div>
@@ -587,15 +659,15 @@ export default function NewHome() {
                     </div>
                     <VerticalSpace h='5'></VerticalSpace>
                     <div className='grid grid-cols-2'>
-                        <div className="col-span-1 bg-black flex justify-center">
+                        <div className={`col-span-1 ${chessUtils?.bg} flex justify-center`}>
                             <motion.p ref={featuresGrid} variants={fadeInAnimationDelay(2)} initial="hidden" animate={featureAnimationControls} className='w-3/5 font-[CenturyGothic] text-center font-normal text-[1rem] text-white'>Choose from a variety of visually appealing themes for a personalized gaming experience.</motion.p>
                         </div>
                         <div className="pl-10 col-span-1 bg-white flex justify-center">
-                            <motion.p ref={featuresGrid} variants={fadeInAnimationDelay(2)} initial="hidden" animate={featureAnimationControls} className='w-3/5 font-[CenturyGothic] font-semibold text-center text-[1rem] text-black'>Stay connected! Chat with your friend while you strategize your next move.</motion.p>
+                            <motion.p ref={featuresGrid} variants={fadeInAnimationDelay(2)} initial="hidden" animate={featureAnimationControls} className={`w-3/5 font-[CenturyGothic] font-semibold text-center text-[1rem] ${chessUtils?.text}`}>Stay connected! Chat with your friend while you strategize your next move.</motion.p>
                         </div>
                     </div>
                     <div className="grid grid-cols-2">
-                        <div className="pt-12 col-span-1 bg-black">
+                        <div className={`pt-12 col-span-1 ${chessUtils?.bg}`}>
                             <motion.div ref={featuresGrid} variants={fadeInAnimationDelay(3)} initial="hidden" animate={featureAnimationControls} className='flex justify-center gap-8'>
                                 <img src="./assets/bg_assets/color-palette.svg" alt="for theme change" className='h-14'/>
                                 <img src="./assets/bg_assets/theme-changed.svg" alt="theme changed" className='h-32'/>
@@ -616,12 +688,12 @@ export default function NewHome() {
                     </div>
                     <VerticalSpace h='10'></VerticalSpace>
                     <div className="w-full flex flex-row text-[1.8rem] tracking-widest font-[CenturyGothic] font-semibold">
-                        <div className="w-1/2 bg-black text-white flex justify-center text-center">
+                        <div className={`w-1/2 ${chessUtils?.bg} text-white flex justify-center text-center`}>
                             <motion.div ref={featuresGrid2} variants={fadeInAnimationDelay(1)} initial="hidden" animate={featureAnimationControls2}>
                                 VIDEO&nbsp;&nbsp;CALLS
                             </motion.div>
                         </div>
-                        <div className="w-1/2 bg-white text-black flex justify-center text-center">
+                        <div className={`w-1/2 bg-white ${chessUtils?.text} flex justify-center text-center`}>
                             <motion.div ref={featuresGrid2} variants={fadeInAnimationDelay(1)} initial="hidden" animate={featureAnimationControls2}>
                                 CHESS&nbsp;AI
                             </motion.div>
@@ -629,18 +701,18 @@ export default function NewHome() {
                     </div>
                     <VerticalSpace h='5'></VerticalSpace>
                     <div className='grid grid-cols-2'>
-                        <div className="pl-10 col-span-1 bg-black flex justify-center">
+                        <div className={`pl-10 col-span-1 ${chessUtils?.bg} flex justify-center`}>
                             <motion.p ref={featuresGrid2} variants={fadeInAnimationDelay(2)} initial="hidden" animate={featureAnimationControls2} className='w-3/5 font-[CenturyGothic] font-normal text-[1rem] text-white text-center'>Make your game more interactive with our built-in video call feature.</motion.p>
                         </div>
                         <div className="pl-10 col-span-1 bg-white flex justify-center">
-                            <motion.p ref={featuresGrid2} variants={fadeInAnimationDelay(2)} initial="hidden" animate={featureAnimationControls2} className='w-3/5 font-[CenturyGothic] font-semibold text-[1rem] text-black text-center'>Challenge yourself with our advanced Chess AI. Perfect your skills anytime, anywhere.</motion.p>
+                            <motion.p ref={featuresGrid2} variants={fadeInAnimationDelay(2)} initial="hidden" animate={featureAnimationControls2} className={`w-3/5 font-[CenturyGothic] font-semibold text-[1rem] ${chessUtils?.text} text-center`}>Challenge yourself with our advanced Chess AI. Perfect your skills anytime, anywhere.</motion.p>
                         </div>
                     </div>
                     <VerticalSpace h='5'></VerticalSpace>
 
                     <div className='grid grid-cols-2'>
-                        <div className="pt-10 col-span-1 bg-black h-full flex justify-center">
-                            <motion.img ref={featuresGrid2} variants={fadeInAnimationDelay(3)} initial="hidden" animate={featureAnimationControls2} src="./assets/bg_assets/video-call-feature.svg" alt="" className='h-40 border border-black'/>
+                        <div className={`pt-10 col-span-1 ${chessUtils?.bg} h-full flex justify-center`}>
+                            <motion.img ref={featuresGrid2} variants={fadeInAnimationDelay(3)} initial="hidden" animate={featureAnimationControls2} src="./assets/bg_assets/video-call-feature.svg" alt="" className={`h-40 border ${chessUtils?.border}`}/>
                         </div>
                         <div className="pt-10 col-span-1 bg-white flex justify-center">
                             <motion.img ref={featuresGrid2} variants={fadeInAnimationDelay(3)} initial="hidden" animate={featureAnimationControls2} src="./assets/bg_assets/chess-ai-2.png" alt="" className='h-[30vh] '/>
