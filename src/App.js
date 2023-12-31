@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Playground from './Playground/playground';
 import Invite from './Invite/invite';
+import Invite2 from './Invite/invite2';
 import RegisterFirstUser from './Register/registerFirstUser';
 import socket from './Socket/socket';
 import RegisterSecondUser from './Register/registerSecondUser';
@@ -9,7 +10,7 @@ import {ChessContext, ChessExtraContext, ChessUtilsContext} from './Context/cont
 import NewHome from './NewHome/newHome';
 import NotFound from './404';
 import NewLobby from './Register/lobby';
-
+import ComingSoon from './NewHome/comingSoon';
 
 function App() {
   const [message, setMessage] = useState(null)
@@ -56,9 +57,11 @@ function App() {
                   <Route path="/" element={<NewHome/>} />
                   <Route path="/register" element={<RegisterFirstUser/>} />
                   <Route path='/invite' element={<Invite/>} />
+                  <Route path='/invite2' element={<Invite2/>} />
                   <Route path='/join/:roomId/:playerId' element={<RegisterSecondUser/>} />
                   <Route path='/lobby' element={<NewLobby/>} />
                   <Route path="/playground/:roomId" element={<Playground/>} />
+                  <Route path="/coming-soon" element={<ComingSoon/>} />
                   <Route path="*" element={<NotFound/>} />
                 </Routes>
             </Router>
