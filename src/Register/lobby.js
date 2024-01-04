@@ -4,6 +4,7 @@ import { motion , useAnimate } from "framer-motion";
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ChessContext, ChessExtraContext } from '../Context/context';
 import socket from '../Socket/socket';
+import { useMediaQuery } from 'react-responsive';
 import './lobby.css';
 
 export default function NewLobby() {
@@ -22,6 +23,7 @@ export default function NewLobby() {
     const roomId = location?.state?.roomId === undefined ? "" : location.state.roomId;
     const playerId = location?.state?.playerId === undefined ? "" : location.state.playerId;
     const color = location?.state?.color === undefined ? "" : location.state.color;
+    const isMobile = useMediaQuery({ query: '(max-width: 860px)' })
 
     const dict = {
       100: "Start Game",
@@ -133,7 +135,77 @@ export default function NewLobby() {
   })
 
    return (
-    <div ref={scope} className="h-full w-full bg-[#ffffff] flex flex-col items-center justify-center select-none ">
+    <>
+    {isMobile?(
+      <div ref={scope} className="h-full w-full bg-[#ffffff] flex flex-col items-center justify-center select-none ">
+        <ChessAnimation/>
+        <div className='absolute px-2 top-12 font-[Monoton] text-black text-[3rem] bg-white'>8 x 8</div>
+        <div className="flex flex-col items-center justify-center w-max h-max">
+          <>
+          {
+            boardRow.map((row, rowIndex) => {
+              return(
+                <>
+                <div className="flex items-center justify-center">
+                {
+                  boardCol.map((item, colIndex) => {
+                    return(
+                      // Use the variants and custom props for each square
+                      <motion.div 
+                        id="circle" 
+                        className={`h-[3rem] w-[3rem] ${item%2===0?'bg-[#F5F5F5] border ':'bg-black'}`}
+                        variants={variants}
+                        // Pass the row and column index as custom value
+                        custom={{
+                          duration: 3 - rowIndex, // Decrease the duration as the row index increases
+                          delay: colIndex // Increase the delay as the column index increases
+                        }}
+                        initial="hidden"
+                        animate="visible"
+                      />
+                    )
+                  })
+                }
+                </div>
+                <div className="flex items-center justify-center">
+                {
+                  boardCol.map((item, colIndex) => {
+                    return(
+                      // Use the variants and custom props for each square
+                      <motion.div 
+                        id="circle" 
+                        className={`h-[3rem] w-[3rem] ${item%2!=0?'bg-white border':'bg-black'}`}
+                        variants={variants}
+                        // Pass the row and column index as custom value
+                        custom={{
+                          duration: 3 - rowIndex, // Decrease the duration as the row index increases
+                          delay: colIndex // Increase the delay as the column index increases
+                        }}
+                        initial="hidden"
+                        animate="visible"
+                      />
+                    )
+                  })
+                }
+              </div>
+              </>
+              )
+            })
+          }
+          <div className=" px-2 py-3 mt-20 flex flex-row items-center justify-center bg-white z-10">
+            {
+              wait.map((item, index)=>{
+                return(
+                  <motion.span variants={animateText(index)} initial="hidden" animate="visible" className="mr-2 font-[CenturyGothic] text-[1.3rem]">{item}</motion.span>
+                )
+              })
+            }
+          </div>
+          </>
+        </div>
+      </div>
+    ):(
+      <div ref={scope} className="h-full w-full bg-[#ffffff] flex flex-col items-center justify-center select-none ">
       <ChessAnimation/>
       <div className='absolute px-2 top-12 font-[Monoton] text-black text-[3rem] bg-white'>8 x 8</div>
       
@@ -204,5 +276,7 @@ export default function NewLobby() {
       }
     </div>
     </div>
+    )}
+    </>
   );
 }

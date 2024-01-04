@@ -12,6 +12,8 @@ import ChessAnimation from "../Register/chessAnimation";
 import { motion, AnimatePresence } from 'framer-motion';
 import VideoCall from "../VideoCall/videoCall";
 import { useParams } from "react-router-dom";
+import { useMediaQuery } from 'react-responsive';
+
 
 function Board({isBlackBoardSet, playerId}) {
     
@@ -45,6 +47,8 @@ function Board({isBlackBoardSet, playerId}) {
     const [chatMessageArray, setChatMessageArray] = useState([]); // [ {senderId: "randomId", message: "message"}, {senderId: "randomId", message: "message"} ]
     const [movesHistoryArray, setMovesHistoryArray] = useState([]); // [ {color: "black", from: "e4", to: "e6", piece: "knight", hasCaptured: true, captured: "queen"}, {color: "black", from: "e4", to: "e6", piece: "knight", hasCaptured: false, captured: ""} ]
     const [eliminatedPiecesArray, setEliminatedPiecesArray] = useState([]); // [ {color: "black", piece: "queen"}, {color: "white", piece: "knight"}
+    const [showVideoMobile, setShowVideoMobile] = useState(false)
+    const isMobile = useMediaQuery({ query: '(max-width: 860px)' })
 
     const saveToStorage = () => {
         let timeStamp = new Date().getTime();
@@ -469,7 +473,174 @@ function Board({isBlackBoardSet, playerId}) {
     }, [])
 
     return (
-        <div className="flex flex-col justify-center items-center h-screen font-[Athiti] bg-white overflow-clip select-none">
+        <>
+        {isMobile?(
+            <div className="w-screen flex flex-col items-center h-screen font-[Athiti] bg-white select-none overflow-clip">
+                <ChessAnimation />
+                <h1 className={`mt-8 text-[3rem] font-[Monoton] font-medium z-10 top-8 bg-white h-max ${chessUtils.text}`}>8 X 8</h1>
+
+                <div className={`mt-6 min-h-[10vh] w-[75vw] bg-black overflow-x-hidden
+                 overflow-y-scroll ${chessUtils?.bg}`}>
+                    {/* <div className={`rounded-sm flex flex-col items-start absolute top-2 left-10 justify-between self-end h-[27%] w-[18%] gap-5 `}> */}
+                <span className="h-1 w-10 bg-white absolute left-[45%] top-2 rounded-md"></span>
+
+                <div className="flex flex-wrap items-start justify-start w-[95%] h-[45%] mx-auto p-2 overflow-y-scroll mt-1">
+                    {
+                        eliminatedPiecesArray.filter(piece => piece?.color === 'white').map((piece, index) => (
+                            <motion.img
+                                key={index}
+                                src={getPieceImage(piece.piece)}
+                                className={`h-6 w-6`}
+                                alt={`${piece.piece}_piece`}
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.5 }}
+                            />
+                        ))
+                    }
+                </div>
+
+                <div className="flex flex-wrap items-start justify-start w-[95%] h-[50%] mx-auto p-2 overflow-y-scroll">
+                    {
+                        eliminatedPiecesArray.filter(piece => piece?.color === 'black').map((piece, index) => (
+                            <motion.img
+                                key={index}
+                                src={getPieceImage(piece.piece)}
+                                className={`h-6 w-6`}
+                                alt={`${piece.piece}_piece`}
+                                initial={{ opacity: 0, scale: 0 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ duration: 0.5 }}
+                            />
+                        ))
+                    }
+                </div>
+                {/* </div> */}
+                </div>
+
+                {/* Chess Board UI start here */}
+                <div className="flex flex-col justify-center items-center">
+                    <div className={`-mt-44 grid grid-cols-8 h-[800px] w-[800px] ring-[4px] rounded-sm ring-black scale-[40%] font-semibold bg-[#f3f3f3]`}>
+                        {board.map((row, rowIndex) =>
+                            row.map((piece, colIndex) => (
+                                <motion.div
+                                    onClick={handlePieceClick}
+                                    id={`${letters[colIndex]}${numbers[rowIndex]}`}
+                                    key={`${letters[colIndex]}${numbers[rowIndex]}`}
+                                    className={`flex flex-col items-center justify-center w-[100px] h-[100px]  
+                                        ${fromSquare === `${letters[colIndex]}${numbers[rowIndex]}` ? "bg-yellow-400" : ""}
+                                        ${moves.includes(`${letters[colIndex]}${numbers[rowIndex]}`) ? ((rowIndex + colIndex) % 2 === 0 ? "bg-[#f0d860] cursor-pointer" : "bg-[#d4b727] cursor-pointer") : ""}
+                                        ${fromSquare !== `${letters[colIndex]}${numbers[rowIndex]}` && !moves.includes(`${letters[colIndex]}${numbers[rowIndex]}`) ? ((rowIndex + colIndex) % 2 === 0 ? chessUtils?.text : `${chessUtils?.chessBg} text-white`) : ""}
+                                    `}
+                                    initial={{ opacity: 0, scale: 0 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.5 }}
+                                >
+                                    {piece && 
+                                        <motion.img
+                                            onMouseDown={(e) => {e.preventDefault()}}
+                                            id={`${letters[colIndex]}${numbers[rowIndex]}`}
+                                            key={`${letters[colIndex]}${numbers[rowIndex]}`}
+                                            src={getPieceImage(piece)}
+                                            className={`
+                                                h-20 w-20
+                                                ${isBlackBoard && getPieceColor(piece) === "black" ? "cursor-pointer" : ""}
+                                                ${!isBlackBoard && getPieceColor(piece) === "white" ? "cursor-pointer" : ""}
+                                            `}
+                                            alt={`${letters[colIndex]}${numbers[rowIndex]}_piece`}
+                                            initial={{ opacity: 0, scale: 0 }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            transition={{ duration: 0.5 }}
+                                        />
+                                    }
+
+                                    {colIndex === 0 && <span className="absolute left-1 h-3 w-3 font-[Poppins] font-semibold text-sm">{numbers[rowIndex]}</span>}
+
+                                    {rowIndex === 7 && <span className="absolute bottom-[7px] ml-1 h-3 w-3 font-[Poppins] font-semibold text-sm">{letters[colIndex]}</span>}
+                                </motion.div>
+                            ))    
+                        )}
+                    </div>
+                    </div>
+                    <div className="w-screen flex flex-row justify-start ml-20">
+                    <div className={`z-10 -mt-[21vh] min-h-[23vh] max-h-[23vh] w-[50vw] ${chessUtils?.bg}`}>
+                    <div className="flex flex-col items-center justify-start h-full w-[95%] mx-auto">
+                            
+                            <div className="cursor-pointer flex flex-row items-center justify-between h-[20%] w-full px-4 py-1">
+                                <span className="h-1 w-10 bg-white absolute left-[45%] top-2 rounded-md"></span>
+                                <div className="flex flex-row items-center justify-start gap-4">
+                                    <FaChess className={`text-sm text-white`} />
+                                    <h1 className="text-white text-center font-[CenturyGothic] font-semibold text-sm">Moves History</h1>
+                                </div>
+                                <FaChess onClick={()=>setChessUtils({...chessUtils, call:true})} className={`text-sm text-white cursor-pointer`} />
+                            </div>
+
+                            <div ref={movesHistoryContainerRef} className="flex flex-col items-center h-[88%] bg-white w-full mb-4 py-2 overflow-y-scroll">
+                                {
+                                    movesHistoryArray.length === 0 ?
+                                        <h1 className="text-black font-[Athiti] font-semibold mt-4 bg-slate-300 px-4 py-1 text-md rounded-md">No moves yet...</h1>
+                                        :
+                                        movesHistoryArray.map((move, index) => {
+                                            
+                                            if(index % 2 == 0){
+                                                
+                                                let whiteMove = movesHistoryArray[index];
+                                                let blackMove = movesHistoryArray[index+1];
+
+                                                return (
+                                                    <motion.div layout key={index} className="grid grid-cols-5 place-items-center w-full h-8 first:mt-4">
+                                                        <motion.div className="col-span-1 flex items-center justify-end h-8">
+                                                            <h1 className="text-black font-[CenturyGothic] font-semibold text-sm self-end">{index/2+1}.</h1>
+                                                        </motion.div>
+                                            
+                                                        {whiteMove && (
+                                                            <motion.div className="col-span-2 flex items-center justify-end h-8 gap-2">
+                                                                <motion.img className="h-6 w-6" src={getPieceImage(whiteMove.piece)} alt={`${whiteMove.piece}_piece`} />
+                                                                <h1 className="text-black font-[CenturyGothic] font-semibold text-sm self-end">{whiteMove.to}</h1>
+                                                            </motion.div>
+                                                        )}
+                                            
+                                                        {blackMove && (
+                                                            <motion.div className="col-span-2 flex items-center justify-end h-8 gap-2">
+                                                                <motion.img className="h-6 w-6" src={getPieceImage(blackMove.piece)} alt={`${blackMove.piece}_piece`} />
+                                                                <h1 className="text-black font-[CenturyGothic] font-semibold text-sm self-end">{blackMove.to}</h1>
+                                                            </motion.div>
+                                                        )}
+                                                    </motion.div>
+                                                );
+                                            }
+                                            else{
+                                                return null;
+                                            }
+                                        })
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className={`ml-4 -mt-[21vh] min-h-[23vh] max-h-[23vh] w-[30vw] ${chessUtils?.bg} grid grid-rows-2`}>
+                        <div style={{cursor: 'pointer'}} onClick={()=>{setShowVideoMobile(true); console.log("set")}} className="flex flex-col justify-center items-center">
+                            <PiPhoneCallFill size={30} className="text-white h-[3rem]"/>
+                            <div className="text-white flex justify-center items-center"><div>
+                                Call</div></div>
+                        </div>
+                        <div className="flex flex-col justify-center items-center">
+                            <RiSendPlaneFill size={30} className="text-white h-[3rem]"/>
+                            <div className="text-white flex justify-center items-center"><div>
+                                Message</div></div>
+                        </div>
+                    </div>
+                    {
+                        showVideoMobile && <div className={`rounded-sm flex flex-row items-start absolute top-2 z-20    right-10 justify-between self-end h-[80vh] w-[80vw] gap-5 ${chessUtils?.bg} ${chessExtra?.call ? "":"hidden"}`}>
+                        <VideoCall roomId={roomId} playerId={playerId}/>
+                        </div>
+                    }
+
+                    
+                </div>
+            </div>
+        ):(
+            <div className="flex flex-col justify-center items-center h-screen font-[Athiti] bg-white overflow-clip select-none">
 
             <ChessAnimation />
 
@@ -727,6 +898,8 @@ function Board({isBlackBoardSet, playerId}) {
             {/* Chess Eliminated Pieces UI end here */}
 
         </div>
+        )}
+        </>
     );
 }
 
