@@ -28,7 +28,7 @@ export default function NewHome() {
 
     useEffect(()=>{
         setChessUtils({
-            bg:"bg-[#000000]", ring:"ring-[#000000]", 
+            bg:"bg-[#000000]", ring:"ring-[#000000]", ring2:"ring-offset-[#000000]",
             text:"text-[#000000]", border:"border-[#000000]", bgHover:"hover:bg-[#000000]", 
             hex:"#000000", chessBg:"bg-[#00000098]", call:false,
             selfName:"", opponentName:""
@@ -306,7 +306,7 @@ export default function NewHome() {
         (<>
             <div className={`h-full w-full ${chessUtils?.bg} select-none overflow-x-hidden`}>
                 <div className="pt-6 min-h-[2rem] min-w-full flex flex-row">
-                    <motion.div variants={fadeInAnimation(1.3)} initial="hidden" animate="visible" className="ml-4 p-1 px-2 text-white font-[CenturyGothic] border-2 text-sm border-white">Choose Your Theme</motion.div>
+                    <motion.div variants={fadeInAnimation(1.3)} initial="hidden" animate="visible" className="ml-4 p-1 px-2 text-white font-[CenturyGothic] border-2 text-sm border-white">Choose Theme</motion.div>
                     <motion.div variants={paletteAnimation} initial="hidden" animate="visible" className='mr-4 w-max overflow-hidden flex justify-center'>
                         <div className="min-h-[1.5rem] max-h-[1.8rem] flex flex-row justify-center items-center border-2 border-white ml-10">
                             <motion.div onClick={()=>setChessUtils({
@@ -314,43 +314,43 @@ export default function NewHome() {
                                 text:"text-[#000000]", border:"border-[#000000]", bgHover:"hover:bg-[#000000]", 
                                 hex:"#000000", chessBg:"bg-[#00000098]", call:false,
                                 selfName:"", opponentName:""
-                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[5vw] bg-[#000000] hover:border-2 hover:border-white"></motion.div>
+                            })} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[5vw] bg-[#000000] hover:border-2 hover:border-white"></motion.div>
                             <motion.div onClick={()=>setChessUtils({
                                 bg:"bg-[#CC2936]", ring:"ring-[#CC2936]", 
                                 text:"text-[#CC2936]", border:"border-[#CC2936]", bgHover:"hover:bg-[#CC2936]", 
                                 hex:"#CC2936", chessBg:"bg-[#CC293698]", call:false,
                                 selfName:"", opponentName:""
-                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[5vw] bg-[#CC2936] hover:border-2 hover:border-white"></motion.div>
+                            })} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[5vw] bg-[#CC2936] hover:border-2 hover:border-white"></motion.div>
                             <motion.div onClick={()=>setChessUtils({
                                 bg:"bg-[#E57C04]", ring:"ring-[#E57C04]", 
                                 text:"text-[#E57C04]", border:"border-[#E57C04]", bgHover:"hover:bg-[#E57C04]", 
                                 hex:"#E57C04", chessBg:"bg-[#E57C0498]", call:false,
                                 selfName:"", opponentName:""
-                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[5.5vw] bg-[#E57C04] hover:border-2 hover:border-white"></motion.div>
+                            })} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[5.5vw] bg-[#E57C04] hover:border-2 hover:border-white"></motion.div>
                             <motion.div onClick={()=>setChessUtils({
                                 bg:"bg-[#338E58]", ring:"ring-[#338E58]", 
                                 text:"text-[#338E58]", border:"border-[#338E58]", bgHover:"hover:bg-[#338E58]", 
                                 hex:"#338E58", chessBg:"bg-[#338E5898]", call:false,
                                 selfName:"", opponentName:""
-                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[6vw] bg-[#338E58] hover:border-2 hover:border-white"></motion.div>
+                            })} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[6vw] bg-[#338E58] hover:border-2 hover:border-white"></motion.div>
                             <motion.div onClick={()=>setChessUtils({
                                 bg:"bg-[#6356E5]", ring:"ring-[#6356E5]", 
                                 text:"text-[#6356E5]", border:"border-[#6356E5]", bgHover:"hover:bg-[#6356E5]", 
                                 hex:"#6356E5", chessBg:"bg-[#6356E598]", call:false,
                                 selfName:"", opponentName:""
-                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[6.5vw] bg-[#6356E5] hover:border-2 hover:border-white"></motion.div>
+                            })} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[6.5vw] bg-[#6356E5] hover:border-2 hover:border-white"></motion.div>
                             <motion.div onClick={()=>setChessUtils({
                                 bg:"bg-[#111D5E]", ring:"ring-[#111D5E]", 
                                 text:"text-[#111D5E]", border:"border-[#111D5E]", bgHover:"hover:bg-[#111D5E]", 
                                 hex:"#111D5E", chessBg:"bg-[#111D5E98]", call:false,
                                 selfName:"", opponentName:""
-                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[7vw] bg-[#111D5E] hover:border-2 hover:border-white"></motion.div>
+                            })} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[7vw] bg-[#111D5E] hover:border-2 hover:border-white"></motion.div>
                             <motion.div onClick={()=>setChessUtils({
                                 bg:"bg-[#420217]", ring:"ring-[#420217]", 
                                 text:"text-[#420217]", border:"border-[#420217]", bgHover:"hover:bg-[#420217]", 
                                 hex:"#420217", chessBg:"bg-[#42021798]", call:false,
                                 selfName:"", opponentName:""
-                            })} whileHover={{scale:1.2}} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[7.5vw] bg-[#420217] hover:border-2 hover:border-white"></motion.div>
+                            })} className="min-h-[1.5rem] max-h-[1.8rem] min-w-[7.5vw] bg-[#420217] hover:border-2 hover:border-white"></motion.div>
                         </div>
                     </motion.div>
                 </div>
@@ -398,8 +398,8 @@ export default function NewHome() {
                         <motion.img variants={reveal(2)} initial="hidden" animate="visible" src="assets/bg_assets/chat.svg" className='h-44' alt="" />
                     </div>
                         
-                    <div className='mt-6 h-[20vh] bg-white'>
-                         <motion.div variants={fadeInAndExpandAnimation(2.3)} initial="hidden" animate="visible" className='mt-2 w-full flex flex-col justify-center items-center gap-4'>
+                    <div className='mt-6 py-10 h-max bg-white'>
+                         <motion.div variants={fadeInAndExpandAnimation(2.3)} initial="hidden" animate="visible" className='mt-2 w-full flex flex-col justify-center items-center gap-6'>
                             <button onClick={()=>navigate('/register')} className={`mt-4 w-[60vw] border-[0.2rem] px-4 py-2 ${chessUtils?.border} text-xl font-bold flex flex-row justify-center items-center gap-4 bg-white`}>Play with Friends</button>
                             <button onClick={()=>navigate('/coming-soon')} className={`mt-2 w-[60vw] border-[0.2rem] px-4 py-2 ${chessUtils?.border} text-xl font-bold flex flex-row justify-center items-center gap-4 bg-white`}>Play with Computer</button>
                         </motion.div>

@@ -39,9 +39,9 @@ function App() {
     }
     else{
         setChessUtils({
-          bg:"bg-[#303030]", ring:"ring-[#303030]", 
-          text:"text-[#303030]", border:"border-[#303030]", bgHover:"hover:bg-[#303030]", 
-          hex:"#303030", chessBg:"bg-[#30303098]", call:false,
+          bg:"bg-[#000000]", ring:"ring-[#000000]", 
+          text:"text-[#000000]", border:"border-[#000000]", bgHover:"hover:bg-[#000000]", 
+          hex:"#000000", chessBg:"bg-[#00000098]", call:false,
           selfName:"", opponentName:""
       })
     }
