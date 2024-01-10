@@ -22,7 +22,7 @@ export default function ComingSoon() {
             <div>
                 <span className="mr-4 font-[Monoton] text-[4rem]">Work</span>
                 <span className="mr-4 font-[Monoton] text-[4rem]">in</span>
-                <span className="font-[Monoton] text-[4rem]">progress :</span>
+                <span className="font-[Monoton] text-[4rem]">progress</span>
             </div>
             <span className="mr-8 font-[CenturyGothic] font-extrabold bg-white">Challenge yourself with our AI, the ultimate chess partner!</span>
         </div>
