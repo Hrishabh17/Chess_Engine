@@ -58,7 +58,7 @@ function Invite(){
             reverseOrder={false}
             />
             <ChessAnimation/>
-            <div className={`flex flex-col items-center justify-center w-4/6 h-max ${chessUtils?.bg} z-10`}>
+            <div className={`flex flex-col items-center justify-center w-[85vw] h-max ${chessUtils?.bg} z-10`}>
             <div className={`flex flex-col items-center py-2 justify-start relative bg-white w-full h-full bottom-3 right-3  ${chessUtils?.border} border-4`}>
                 <h1 className={`font-[Monoton] ${chessUtils?.text} text-[320%]`}>8 X 8</h1>
 
@@ -66,8 +66,10 @@ function Invite(){
 
                 
                 <div className='flex flex-row items-center justify-center w-[80%] h-max mt-10'>
-                        <div className={`font-[Poppins] font-medium text-md ring-1 ${chessUtils.ring} ${chessUtils.text} line-clamp-1 py-2 px-5 w-[80%] bg-slate-200 outline-none`}>{inviteLinkShort}</div>
-                        <div onClick={handleCopyClick} className={`${chessUtils.bg} text-white font-[Poppins] text-md py-2 px-2 text-center w-[30%] ring-1 ${chessUtils.ring} cursor-pointer hover:scale-105 ease-in-out duration-200 delay-75`}>Copy</div>
+                        <div className={`py-2 ring-1 ${chessUtils.ring} ${chessUtils.text}  px-5 w-[80%] bg-slate-200 outline-none`}>
+                        <div className={`font-[Poppins] font-medium text-xs line-clamp-1`}>{inviteLinkShort}</div>
+                        </div>
+                        <div onClick={handleCopyClick} className={`${chessUtils.bg} text-white font-[Poppins] text-xs py-2 px-2 text-center w-[30%] ring-1 ${chessUtils.ring} cursor-pointer hover:scale-105 ease-in-out duration-200 delay-75`}>Copy</div>
                 </div>
                 <button onClick={handlePlay} className={`ring-1 ${chessUtils?.ring} text-md text-center px-5 py-1 mt-12 mb-6 font-bold ${chessUtils?.text} hover:text-white ${chessUtils?.bgHover} ease-in-out duration-200 delay-75 flex flex-row items-center`}>Let's Play <IoIosArrowRoundForward  size={40}/> </button>
             </div>

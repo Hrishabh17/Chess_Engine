@@ -6,7 +6,7 @@ import { ChessContext, ChessExtraContext, ChessUtilsContext } from '../Context/c
 import { PiPhoneCallFill, PiPhoneFill } from 'react-icons/pi'
 import { motion } from 'framer-motion'
 
-export default function VideoCall({roomId, playerId}) {
+export default function VideoCall({roomId, playerId, mobile}) {
     const connStatus = {
         STAGE : 'STAGE',
         OFFERING: 'OFFERING',
@@ -227,61 +227,72 @@ export default function VideoCall({roomId, playerId}) {
     }
     
     return (
-        <div className={`flex flex-col items-center justify-center gap-4 h-[80%] w-[95%] mx-auto my-auto bg-white`}>
-            <span className="h-1 w-10 bg-white absolute left-[45%] top-2 rounded-md"></span>
-            {
-                ((connectionStatus === connStatus.STAGE || otherStream===null) && (initiator)) && <>
-                    <PiPhoneCallFill className={`animate-shake-2 ${chessUtils?.text} bg-white rounded-full h-[80px] w-[80px] p-3 ml-1`}/>
-                    <h1 className={`${chessUtils?.text} text-2xl font-bold font-[Athiti] tracking-wider`}>
-                        Calling
-                        <span className={`dot-animation px-1 text-[50px]`}>
-                            <span className={`animate-ping`} style={{ animationDelay: '0.5s' }}>.</span>
-                            <span className={`animate-ping`} style={{ animationDelay: '0.9s' }}>.</span>
-                            <span className={`animate-ping`} style={{ animationDelay: '0s' }}>.</span>
-                        </span>
-                        <span onClick={()=>handleEndCall(true)} className={`absolute bottom-2 flex flex-row justify-center items-center gap-2 bg-white text-black border-2 ${chessUtils?.border} box-shadow px-5 py-1 cursor-pointer`}>
-                            <PiPhoneFill className={`text-red-500 text-[20px] rotate-[135deg] `}/>
-                            <h1 className={`text-xs font-semibold font-[CenturyGothic]`}>End Call</h1>
-                        </span>
-                    </h1>
-                </>
-            }
-            {
-                connectionStatus === connStatus.RECEIVING && 
-                <div className={`flex flex-col items-center justify-center gap-8 w-full`}>
-                    <PiPhoneCallFill className={`${chessUtils?.text} text-[60px] animate-shake`}/>
-                    <motion.div className={`overflow-hidden flex flex-row items-center justify-start w-[90%] bg-gradient-to-r from-white to-gray-400 h-16 rounded-full`}>
-                        <motion.div 
-                            drag='x'
-                            dragConstraints={{left:0, right:300}}
-                            dragElastic={{left:0, right:0.1}}
-                            dragDirectionLock
-                            onDragEnd={handleDragEnd}
-                        >
-                            <PiPhoneCallFill className={`animate-shake-2 text-[40px] text-green-500 ${chessUtils?.bg} rounded-full h-[60px] w-[60px] p-3 ml-1`}/>
-                        </motion.div>
-                        <h1 className={`text-slate-400 ml-24 text-xl font-semibold font-[CenturyGothic]`}>Slide to answer..</h1>
-                    </motion.div>                
-                </div> 
-            }
-
-            
-            <div className={`flex ${chessUtils?.bg} flex-col items-center justify-center w-full h-[100%] gap-2 ${otherStream===null ? 'hidden':''}`}>
-                <div className={`flex flex-row items-center justify-center w-[100%] h-full ${otherStream===null ? 'hidden':''}`}>
-                    <span className={`absolute top-8 left-5 bg-white text-black w-max px-2 font-[Poppins] text-sm rounded-sm`}>{chessExtra?.opponentName}</span>
-                    <video className={`h-full w-[60%] object-cover`} ref={videoOther} autoPlay></video>
-                    
-                    <div className={`flex flex-col items-center justify-start h-full w-[40%] gap-4`}>
-                        <span className={`absolute top-8 right-5 bg-white text-black w-max px-2 font-[Poppins] text-sm rounded-sm`}>You</span>
-                        <video className={`h-[100%] w-full object-cover`} ref={videoSelf} autoPlay muted={true}></video>
+        <>
+        {
+            mobile==true?(
+            <>
+                
+            </>
+            ):(
+                <div className={`flex flex-col items-center justify-center gap-4 h-[80%] w-[95%] mx-auto my-auto bg-white`}>
+                <span className="h-1 w-10 bg-white absolute left-[45%] top-2 rounded-md"></span>
+                {
+                    ((connectionStatus === connStatus.STAGE || otherStream===null) && (initiator)) && <>
+                        <PiPhoneCallFill className={`animate-shake-2 ${chessUtils?.text} bg-white rounded-full h-[80px] w-[80px] p-3 ml-1`}/>
+                        <h1 className={`${chessUtils?.text} text-2xl font-bold font-[Athiti] tracking-wider`}>
+                            Calling
+                            <span className={`dot-animation px-1 text-[50px]`}>
+                                <span className={`animate-ping`} style={{ animationDelay: '0.5s' }}>.</span>
+                                <span className={`animate-ping`} style={{ animationDelay: '0.9s' }}>.</span>
+                                <span className={`animate-ping`} style={{ animationDelay: '0s' }}>.</span>
+                            </span>
+                            <span onClick={()=>handleEndCall(true)} className={`absolute bottom-2 flex flex-row justify-center items-center gap-2 bg-white text-black border-2 ${chessUtils?.border} box-shadow px-5 py-1 cursor-pointer`}>
+                                <PiPhoneFill className={`text-red-500 text-[20px] rotate-[135deg] `}/>
+                                <h1 className={`text-xs font-semibold font-[CenturyGothic]`}>End Call</h1>
+                            </span>
+                        </h1>
+                    </>
+                }
+                {
+                    connectionStatus === connStatus.RECEIVING && 
+                    <div className={`flex flex-col items-center justify-center gap-8 w-full`}>
+                        <PiPhoneCallFill className={`${chessUtils?.text} text-[60px] animate-shake`}/>
+                        <motion.div className={`overflow-hidden flex flex-row items-center justify-start w-[90%] bg-gradient-to-r from-white to-gray-400 h-16 rounded-full`}>
+                            <motion.div 
+                                drag='x'
+                                dragConstraints={{left:0, right:300}}
+                                dragElastic={{left:0, right:0.1}}
+                                dragDirectionLock
+                                onDragEnd={handleDragEnd}
+                            >
+                                <PiPhoneCallFill className={`animate-shake-2 text-[40px] text-green-500 ${chessUtils?.bg} rounded-full h-[60px] w-[60px] p-3 ml-1`}/>
+                            </motion.div>
+                            <h1 className={`text-slate-400 ml-24 text-xl font-semibold font-[CenturyGothic]`}>Slide to answer..</h1>
+                        </motion.div>                
+                    </div> 
+                }
+    
+                
+                <div className={`flex ${chessUtils?.bg} flex-col items-center justify-center w-full h-[100%] gap-2 ${otherStream===null ? 'hidden':''}`}>
+                    <div className={`flex lg:flex-row flex-col items-center justify-center w-[100%] h-full ${otherStream===null ? 'hidden':''}`}>
+                        <span className={`md:absolute lg:absolute sm:hidden xs:hidden top-8 left-5 bg-white text-black w-max px-2 font-[Poppins] text-sm rounded-sm `}>{chessExtra?.opponentName}</span>
+                        <video className={`h-full w-[60%] object-cover`} ref={videoOther} autoPlay></video>
+                        
+                        <div className={`flex flex-col items-center justify-start h-full w-[40%] gap-4`}>
+                            <span className={`md:absolute lg:absolute sm:hidden xs:hidden top-8 right-5 bg-white text-black w-max px-2 font-[Poppins] text-sm rounded-sm`}>You</span>
+                            <video className={`h-[100%] w-full object-cover`} ref={videoSelf} autoPlay muted={true}></video>
+                        </div>
                     </div>
-                </div>
-                <span onClick={()=>handleEndCall(true)} className={`absolute bottom-2 flex flex-row justify-center items-center gap-2 bg-white text-black border-2 ${chessUtils?.border} box-shadow px-5 py-1 cursor-pointer`}>
-                    <PiPhoneFill className={`text-red-500 text-[20px] rotate-[135deg] `}/>
-                    <h1 className={`text-xs font-semibold font-[CenturyGothic]`}>End Call</h1>
-                </span>
-            </div>   
-            
-        </div>
+                    <span onClick={()=>handleEndCall(true)} className={`absolute bottom-2 flex flex-row justify-center items-center gap-2 bg-white text-black border-2 ${chessUtils?.border} box-shadow px-5 py-1 cursor-pointer`}>
+                        <PiPhoneFill className={`text-red-500 text-[20px] rotate-[135deg] `}/>
+                        <h1 className={`text-xs font-semibold font-[CenturyGothic]`}>End Call</h1>
+                    </span>
+                </div>   
+                
+            </div>        
+            )
+        }
+        </>
+        
     )
 }
