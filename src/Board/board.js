@@ -625,7 +625,7 @@ function Board({isBlackBoardSet, playerId}) {
 
                 {/* Chess Board UI start here */}
                 <div className="mt-10 flex flex-col justify-center items-center mx-2">
-                    <div className={`grid grid-cols-8 h-[100%] w-[100%] ring-[4px] rounded-sm ring-black font-semibold bg-[#f3f3f3]`}>
+                    <div className={`grid grid-cols-8 h-[100%] w-[100%] ring-[4px] rounded-sm ring-black font-semibold bg-[#f3f3f3] z-10`}>
                         {board.map((row, rowIndex) =>
                             row.map((piece, colIndex) => (
                                 <motion.div
