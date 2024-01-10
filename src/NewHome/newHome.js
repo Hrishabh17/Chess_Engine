@@ -399,9 +399,9 @@ export default function NewHome() {
                     </div>
                         
                     <div className='mt-6 py-10 h-max bg-white'>
-                         <motion.div variants={fadeInAndExpandAnimation(2.3)} initial="hidden" animate="visible" className='mt-2 w-full flex flex-col justify-center items-center gap-6'>
-                            <button onClick={()=>navigate('/register')} className={`mt-4 w-[60vw] border-[0.2rem] px-4 py-2 ${chessUtils?.border} text-xl font-bold flex flex-row justify-center items-center gap-4 bg-white`}>Play with Friends</button>
-                            <button onClick={()=>navigate('/coming-soon')} className={`mt-2 w-[60vw] border-[0.2rem] px-4 py-2 ${chessUtils?.border} text-xl font-bold flex flex-row justify-center items-center gap-4 bg-white`}>Play with Computer</button>
+                         <motion.div variants={fadeInAndExpandAnimation(2.3)} initial="hidden" animate="visible" className='my-2 w-full flex flex-col justify-center items-center gap-6'>
+                            <button onClick={()=>navigate('/register')} className={`mt-2 w-[70vw] border-[0.2rem] px-2 py-1 ${chessUtils?.border} text-md font-bold flex flex-row justify-center items-center gap-1 bg-white`}>Play with Friends <IoIosArrowRoundForward  size={50}/></button>
+                            <button onClick={()=>navigate('/coming-soon')} className={`mt-2 w-[70vw] border-[0.2rem] px-2 py-1 ${chessUtils?.border} text-md font-bold flex flex-row justify-center items-center gap-1 bg-white`}>Play with Computer<IoIosArrowRoundForward  size={50}/></button>
                         </motion.div>
                     </div>
                     <div className={`pl-6 h-full ${chessUtils?.bg} flex flex-col`}>

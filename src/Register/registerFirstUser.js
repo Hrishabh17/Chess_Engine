@@ -49,7 +49,7 @@ export default function RegisterFirstUser() {
                 <>
                 <div className='h-full w-[100vw] bg-white flex items-center justify-center select-none'>
                     <ChessAnimation/>
-                    <div className={`flex flex-col items-center justify-center w-[85vw] h-max ${chessUtils?.bg} z-10`}>
+                    <div className={`flex flex-col items-center ml-3 justify-center w-[93vw] h-max ${chessUtils?.bg} z-10`}>
                         <div className={`flex flex-col items-center py-2 justify-start relative bg-white w-full h-full bottom-3 right-3 ${chessUtils?.border} border-4`}>
                             <h1 className={`font-[Monoton] ${chessUtils?.text} text-[200%]`}>8 X 8</h1>
                             <h1 className={`px-2 font-[CenturyGothic] ${chessUtils?.text} text-sm text-center font-bold mt-5`}>Click on Generate to create a new chess room</h1>
