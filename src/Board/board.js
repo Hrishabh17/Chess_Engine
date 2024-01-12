@@ -526,7 +526,7 @@ function Board({isBlackBoardSet, playerId}) {
     return (
         <>
         {
-            winner !== null && 
+            winner && 
             <div id='popup' className="fixed inset-0 z-10 overflow-y-auto select-none">
                 <button className="fixed inset-0 w-full h-full bg-black opacity-70"></button>
                 <div className="flex items-center min-h-screen px-4 py-8 text-white ">
