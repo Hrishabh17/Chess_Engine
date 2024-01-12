@@ -100,8 +100,10 @@ function Invite(){
                     <h1 className={`font-[CenturyGothic] ${chessUtils?.text} text-xl font-bold mt-5`}>Click on Generate to create a new chess room</h1>
 
                     <div className='flex flex-row items-center justify-center w-[90%] h-max mt-10'>
-                        <div className={`font-[Poppins] font-medium text-lg ring-1 ${chessUtils.ring} ${chessUtils.text} py-3 px-5 w-[80%] bg-slate-200 outline-none`}>{inviteLinkShort}</div>
-                        <div onClick={handleCopyClick} className={`${chessUtils.bg} text-white font-[Poppins] text-lg py-3 px-10 text-center w-[20%] ring-1 ${chessUtils.ring} cursor-pointer hover:scale-105 ease-in-out duration-200 delay-75`}>Copy</div>
+                        <div className={`font-[Poppins] font-medium text-lg ring-1 ${chessUtils.ring} ${chessUtils.text} py-3 px-5 w-[80%] bg-slate-200 outline-none`}>
+                            <div className={`w-full py-0 line-clamp-1`}>{inviteLinkShort}</div>
+                        </div>
+                        <div onClick={handleCopyClick} className={`${chessUtils.bg} text-white font-[Poppins] text-lg py-3 text-center w-[20%] ring-1 ${chessUtils.ring} cursor-pointer hover:scale-105 ease-in-out duration-200 delay-75`}>Copy</div>
                     </div>
             
                     <button onClick={handlePlay} className={`ring-1 ${chessUtils?.ring} text-xl text-center px-10 py-1 mt-12 mb-6 font-bold ${chessUtils?.text} hover:text-white ${chessUtils?.bgHover} ease-in-out duration-200 delay-75 flex flex-row items-center`}>Let's Play <IoIosArrowRoundForward  size={40}/> </button>

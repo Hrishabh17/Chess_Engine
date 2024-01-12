@@ -320,10 +320,13 @@ const generateLegalMoves = (board, fromSquare, numbers, letters, kingPosition, i
     else if(piece.toLowerCase() === 'k'){
         if(isCheck(board, numbers, letters, kingPosition, isWhiteTurn)){
             console.log('king is in check')
-            return [];
+            // return [];
         } 
-       
-        console.log('king is not in check')
+        else{
+
+            
+            console.log('king is not in check')
+        }
         return generateKingMoves(board, fromSquare, numbers, letters);
     }
 }
