@@ -59,6 +59,15 @@ function Board({isBlackBoardSet, playerId}) {
     const [eliminatedPiecesArray, setEliminatedPiecesArray] = useState([]); // [ {color: "black", piece: "queen"}, {color: "white", piece: "knight"}
     const [showVideoMobile, setShowVideoMobile] = useState(false)
     const isMobile = useMediaQuery({ query: '(max-width: 860px)' })
+    const [winner, setWinner] = useState();
+    const [videoIsOpen, setVideoIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+
+
+    useEffect(() => {
+        eliminatedPiecesArray.find(piece => piece?.piece === "K") && setWinner("black");
+        eliminatedPiecesArray.find(piece => piece?.piece === "k") && setWinner("white");
+    }, [eliminatedPiecesArray])
 
     const saveToStorage = () => {
         let timeStamp = new Date().getTime();
@@ -241,6 +250,9 @@ function Board({isBlackBoardSet, playerId}) {
 
             if(captured !== null){
                 const capturedPieceColor = getPieceColor(captured);
+                if(captured === "K" || captured === "k"){
+                    setWinner(capturedPieceColor === "white" ? "black" : "white");
+                }
                 setEliminatedPiecesArray([...eliminatedPiecesArray, {color: capturedPieceColor, piece: captured}]);
             }
 
@@ -292,6 +304,9 @@ function Board({isBlackBoardSet, playerId}) {
 
             if(captured !== null){
                 const capturedPieceColor = getPieceColor(captured);
+                if(captured === "K" || captured === "k"){
+                    setWinner(capturedPieceColor === "white" ? "black" : "white");
+                }
                 setEliminatedPiecesArray([...eliminatedPiecesArray, {color: capturedPieceColor, piece: captured}]);
             }
 
@@ -406,7 +421,7 @@ function Board({isBlackBoardSet, playerId}) {
 
             setMoveCount(moveCount);
             setMovesHistoryArray(moveHistory);
-            setEliminatedPiecesArray(capturedPieces);       
+            setEliminatedPiecesArray(capturedPieces);   
         })
     }
 
@@ -445,7 +460,7 @@ function Board({isBlackBoardSet, playerId}) {
 
             setMoveCount(moveCount);
             setMovesHistoryArray(moveHistory);
-            setEliminatedPiecesArray(capturedPieces);       
+            setEliminatedPiecesArray(capturedPieces);      
         })
     }
 
@@ -483,8 +498,6 @@ function Board({isBlackBoardSet, playerId}) {
         getAndSendData();
     }, [])
 
-    const [isOpen, setIsOpen] = useState(false);
-
     const openModal = () => {
       setIsOpen(true);
       setUnread(false);
@@ -493,8 +506,6 @@ function Board({isBlackBoardSet, playerId}) {
     const closeModal = () => {
       setIsOpen(false);
     };
-
-    const [videoIsOpen, setVideoIsOpen] = useState(false);
   
     const closeMobileVideo = () => {
         setVideoIsOpen(false);
@@ -508,8 +519,39 @@ function Board({isBlackBoardSet, playerId}) {
         }
     }, [chessExtra?.call])
 
+    useEffect(()=>{
+        console.log(winner)
+    }, [winner])
+
     return (
         <>
+        {
+            winner !== null && 
+            <div id='popup' className="fixed inset-0 z-10 overflow-y-auto select-none">
+                <button className="fixed inset-0 w-full h-full bg-black opacity-70"></button>
+                <div className="flex items-center min-h-screen px-4 py-8 text-white ">
+                    
+                    <div className={`box-shadow-5-white relative w-full max-w-lg tablet:p-4 mobile:p-2 mx-auto shadow-lg ${chessUtils.bg}`}>
+                        <div className='flex flex-col items-start justify-center gap-4'>
+                            <div className="flex flex-row items-center justify-center mx-auto w-full gap-8">
+                                {(isBlackBoard && winner === 'black' || !isBlackBoard && winner==='white') && <h1 className={`border-b-[1px] font-[Poppins] tablet:text-[1.3rem] py-2 px-3 font-medium`}>Winner</h1> }
+                                {(!isBlackBoard && winner === 'black' || isBlackBoard && winner==='white') && <h1 className={`border-b-[1px] font-[Poppins] tablet:text-[1.3rem] py-2 px-3 font-medium`}>Hard Luck</h1>}
+                            </div>
+                            <div className="flex flex-row items-center justify-center mx-auto w-full gap-8 mb-4">
+                                {(isBlackBoard && winner === 'black' || !isBlackBoard && winner==='white') && <h1 className='font-[Poppins] font-medium tablet:text-[0.8rem] mobile:text-[0.6rem] text-center px-2'>You truly are a champion!!</h1>}
+                                {(!isBlackBoard && winner === 'black' || isBlackBoard && winner==='white') && <h1 className='font-[Poppins] font-medium tablet:text-[0.8rem] mobile:text-[0.6rem] text-center px-2'>You can always come back and lead the way!!</h1>}
+                            </div>
+                        
+                        </div>
+                        {/* <div className='flex flex-row items-center justify-center gap-8 tablet:py-3 tablet:px-2 mobile:p-1'>
+                            <button id='clickOK' onClick={()=>setModalVisibility(false)} className={`hover:cursor-pointer font-[Poppins] ${theme==='dark'?'link-underline-black':'link-underline-white font-medium'} link link-underline w-1/4 mt-2 py-1 text-[10px] md:text-sm font-medium rounded-lg`}>Close</button>
+                        </div> */}
+                    </div>
+
+                </div>
+            </div>
+        }
+
         {isMobile?(
             <div className="w-screen flex flex-col items-center h-max font-[Athiti] bg-white select-none overflow-clip">
                 <h1 className={`mt-8 text-[3rem] font-[Monoton] font-medium z-10 top-8 bg-white h-max ${chessUtils.text}`}>8 X 8</h1>
